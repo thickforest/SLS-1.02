@@ -33,17 +33,18 @@ How to Install
     cp "$CDROM"/install/a1.3 "$FLOPPY"
     cp -a "$CDROM"/install "$FATDRIVE"/.
 
+    # @debian8.0.2(i386) :apt-get install qemu-system-x86
     qemu-system-i386 \
         -M isapc \
         -m 16M \
         -hda "$DISK" \
         -no-reboot \
         -net nic -net user,hostfwd=tcp:127.0.0.1:2023-:23 \
-        -vga std -monitor vc \
+        -vga std -monitor vc \      # 如果报错，可以删掉此行
         -fda "$FLOPPY" \
-        -rtc base="date +1996-%m-%dT%T" \
+        -rtc base="date +1996-%m-%dT%T" \       # 如果报错，可以删掉此行
         -boot once=a \
-        -hdb fat:"$FATDRIVE" \
+        -hdb fat:"$FATDRIVE" \      # 挂载命令mount -t msdos /dev/hdb1 /mnt
 
     A disk of 500M is sufficient (or even huge!) and if you go above it you may
     run into problems with "lilo" and the BIOS.
